@@ -73,7 +73,9 @@ case_file_pool_packer = CaseFilePacker::PoolPacker.new
 
 puts "disclosure benchmark: serialization"
 Benchmark.ips do |x|
-  x.report("disclosure-optimal-approach") { @optimal_factory.dump(disclosure) }
+  x.report("disclosure-single-factory-approach") do
+    @optimal_factory.dump(disclosure)
+  end
   x.report("disclosure-pool-approach") { @pool.dump(disclosure) }
   x.compare!(order: :baseline)
 end
@@ -83,19 +85,19 @@ disclosure_original_payload = @original_factory.dump(disclosure)
 disclosure_optimal_payload = @optimal_factory.dump(disclosure)
 disclosure_pool_payload = @pool.dump(disclosure)
 
-Benchmark.ips do |x|
-  x.report("disclosure-single-factory-approach") do
-    @optimal_factory.load(disclosure_optimal_payload)
-  end
-  x.report("disclosure-pool-approach") { @pool.load(disclosure_pool_payload) }
-  x.compare!(order: :baseline)
-end
+# Benchmark.ips do |x|
+#   x.report("disclosure-single-factory-approach") do
+#     @optimal_factory.load(disclosure_optimal_payload)
+#   end
+#   x.report("disclosure-pool-approach") { @pool.load(disclosure_pool_payload) }
+#   x.compare!(order: :baseline)
+# end
 
 # puts "case file benchmark: serialization"
 # Benchmark.ips do |x|
-#   # x.report("case_file - original") { @original_factory.dump(case_file) }
-#   x.report("case_file - optimal") { @optimal_factory.dump(case_file) }
-#   x.report("case_file - pool") { @pool_factory.dump(case_file) }
+#   # x.report("case_file-original-approach") { @original_factory.dump(case_file) }
+#   x.report("case_file-single-factory-approach") { @optimal_factory.dump(case_file) }
+#   x.report("case_file-pool-approach") { @pool_factory.dump(case_file) }
 #   x.compare!(order: :baseline)
 # end
 
@@ -105,12 +107,12 @@ end
 # case_file_pool_payload = @pool_factory.dump(case_file)
 
 # Benchmark.ips do |x|
-#   # x.report("case_file - original") do
+#   # x.report("case_file-original-approach") do
 #   #   @original_factory.load(case_file_original_payload)
 #   # end
-#   x.report("case_file - optimal") do
+#   x.report("case_file-single-factory-approach") do
 #     @optimal_factory.load(case_file_optimal_payload)
 #   end
-#   x.report("case_file - pool") { @pool_factory.load(case_file_pool_payload) }
+#   x.report("case_file-pool-approach") { @pool_factory.load(case_file_pool_payload) }
 #   x.compare!(order: :baseline)
 # end

@@ -44,6 +44,7 @@ module DisclosurePacker
     end
 
     def pack(disclosure, packer)
+      puts "Called disclosure packer V1"
       packer.pack(disclosure.id)
       packer.pack(disclosure.details)
     end

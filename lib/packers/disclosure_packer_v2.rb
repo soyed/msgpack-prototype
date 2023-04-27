@@ -10,17 +10,11 @@ module DisclosurePackerV2
         0x03,
         DisclosureDetail,
         recursive: true,
-        # packer: ->(item, packer) do
-        #   packer.pack("hello")
-        #   disclosure_detail_packer.pack(item, packer)
-        #   packer
-        # end,
         packer: ->(_packer) { raise NotImplementedError },
-        # unpacker: ->(unpacker) do
-        #   puts unpacker.read
-        #   disclosure_detail_packer.unpack(unpacker)
-        # end
-        unpacker: ->(unpacker) { raise NotImplementedError }
+        unpacker: ->(unpacker) do
+          puts unpacker.read
+          disclosure_detail_packer.unpack(unpacker)
+        end
       )
     end
 
